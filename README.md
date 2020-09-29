@@ -34,4 +34,4 @@ python test.py --model-path <path of the model to be evaluated> --data-path <dir
 
 ### Pretrained models
 
-pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be downloaded from here or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
+pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in pretrained_models folder or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
