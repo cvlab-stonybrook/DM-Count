@@ -41,6 +41,18 @@ python train.py --data-dir <path to processed qnrf dataset> --device <gpu device
 python test.py --model-path <path of the model to be evaluated> --data-path <directory for the dataset> --dataset <dataset name: qnrf, nwpu or sh>
 ```
 
-### Pretrained models
+## Pretrained models
 
-pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in pretrained_models folder or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
+Pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in pretrained_models folder or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
+
+## References
+If you find this work or code useful, please cite:
+
+```
+@inproceedings{wang2020DMCount,
+  title={Distribution Matching for Crowd Counting},
+  author={Boyu Wang and Huidong Liu and Dimitris Samaras and Minh Hoai},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2020},
+}
+```
