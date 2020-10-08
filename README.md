@@ -13,7 +13,15 @@ Pytorch >= 1.2
 For other libraries, check requirements.txt.
 
 ## Getting Started
-1. Data preprocess
+1. Dataset download
+
++ QNRF can be downloaded [here](https://www.crcv.ucf.edu/data/ucf-qnrf/)
+
++ NWPU can be downloaded [here](https://www.crowdbenchmark.com/nwpucrowd.html)
+
++ Shanghai Tech Part A and Part B can be downloaded [here](https://github.com/desenzhou/ShanghaiTechDataset)
+
+2. Data preprocess
 
 Due to large sizes of images in QNRF and NWPU datasets, we preprocess these two datasets.
 
@@ -21,12 +29,13 @@ Due to large sizes of images in QNRF and NWPU datasets, we preprocess these two 
 python preprocess_dataset.py --dataset <dataset name: qnrf or nwpu> --input-dataset-path <original data directory> --output-dataset-path <processed data directory> 
 ```
     
-2. Training
+3. Training
 
-Training code coming soon.
+```
+python train.py --data-dir <path to processed qnrf dataset> --device <gpu device id>
+```
 
-
-3. Test
+4. Test
 
 ```
 python test.py --model-path <path of the model to be evaluated> --data-path <directory for the dataset> --dataset <dataset name: qnrf, nwpu or sh>

@@ -37,10 +37,9 @@ def gen_discrete_map(im_height, im_width, points):
 
 
 class Base(data.Dataset):
-    def __init__(self, root_path, crop_size, downsample_ratio=8, method='train'):
+    def __init__(self, root_path, crop_size, downsample_ratio=8):
 
         self.root_path = root_path
-        self.method = method
         self.c_size = crop_size
         self.d_ratio = downsample_ratio
         assert self.c_size % self.d_ratio == 0
@@ -96,7 +95,8 @@ class Crowd_qnrf(Base):
     def __init__(self, root_path, crop_size,
                  downsample_ratio=8,
                  method='train'):
-        super().__init__(root_path, crop_size, downsample_ratio, method)
+        super().__init__(root_path, crop_size, downsample_ratio)
+        self.method = method
         self.im_list = sorted(glob(os.path.join(self.root_path, '*.jpg')))
         print('number of img: {}'.format(len(self.im_list)))
         if method not in ['train', 'val']:
@@ -123,7 +123,8 @@ class Crowd_nwpu(Base):
     def __init__(self, root_path, crop_size,
                  downsample_ratio=8,
                  method='train'):
-        super().__init__(root_path, crop_size, downsample_ratio, method)
+        super().__init__(root_path, crop_size, downsample_ratio)
+        self.method = method
         self.im_list = sorted(glob(os.path.join(self.root_path, '*.jpg')))
         print('number of img: {}'.format(len(self.im_list)))
 
@@ -155,7 +156,8 @@ class Crowd_sh(Base):
     def __init__(self, root_path, crop_size,
                  downsample_ratio=8,
                  method='train'):
-        super().__init__(root_path, crop_size, downsample_ratio, method)
+        super().__init__(root_path, crop_size, downsample_ratio)
+        self.method = method
         if method not in ['train', 'val']:
             raise Exception("not implement")
 
@@ -177,3 +179,46 @@ class Crowd_sh(Base):
         elif self.method == 'val':
             img = self.trans(img)
             return img, len(keypoints), name
+
+    def train_transform(self, img, keypoints):
+        wd, ht = img.size
+        st_size = 1.0 * min(wd, ht)
+        # resize the image to fit the crop size
+        if st_size < self.c_size:
+            rr = 1.0 * self.c_size / st_size
+            wd = round(wd * rr)
+            ht = round(ht * rr)
+            st_size = 1.0 * min(wd, ht)
+            img = img.resize((wd, ht), Image.BICUBIC)
+            keypoints = keypoints * rr
+        assert st_size >= self.c_size, print(wd, ht)
+        assert len(keypoints) >= 0
+        i, j, h, w = random_crop(ht, wd, self.c_size, self.c_size)
+        img = F.crop(img, i, j, h, w)
+        if len(keypoints) > 0:
+            keypoints = keypoints - [j, i]
+            idx_mask = (keypoints[:, 0] >= 0) * (keypoints[:, 0] <= w) * \
+                       (keypoints[:, 1] >= 0) * (keypoints[:, 1] <= h)
+            keypoints = keypoints[idx_mask]
+        else:
+            keypoints = np.empty([0, 2])
+
+        gt_discrete = gen_discrete_map(h, w, keypoints)
+        down_w = w // self.d_ratio
+        down_h = h // self.d_ratio
+        gt_discrete = gt_discrete.reshape([down_h, self.d_ratio, down_w, self.d_ratio]).sum(axis=(1, 3))
+        assert np.sum(gt_discrete) == len(keypoints)
+
+        if len(keypoints) > 0:
+            if random.random() > 0.5:
+                img = F.hflip(img)
+                gt_discrete = np.fliplr(gt_discrete)
+                keypoints[:, 0] = w - keypoints[:, 0]
+        else:
+            if random.random() > 0.5:
+                img = F.hflip(img)
+                gt_discrete = np.fliplr(gt_discrete)
+        gt_discrete = np.expand_dims(gt_discrete, 0)
+
+        return self.trans(img), torch.from_numpy(keypoints.copy()).float(), st_size, torch.from_numpy(
+            gt_discrete.copy()).float()

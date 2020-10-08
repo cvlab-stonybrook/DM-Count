@@ -15,7 +15,7 @@ parser.add_argument('--data-path', type=str,
                     default='data/QNRF-Train-Val-Test',
                     help='saved model path')
 parser.add_argument('--dataset', type=str, default='qnrf',
-                    help='dataset name: qnrf, nwpu, sh')
+                    help='dataset name: qnrf, nwpu, sha, shb')
 
 args = parser.parse_args()
 
@@ -25,11 +25,11 @@ device = torch.device('cuda')
 model_path = args.model_path
 crop_size = args.crop_size
 data_path = args.data_path
-if args.dataset == 'qnrf':
+if args.dataset.lower() == 'qnrf':
     dataset = crowd.Crowd_qnrf(os.path.join(data_path, 'test'), crop_size, 8, method='val')
-elif args.dataset == 'nwpu':
+elif args.dataset.lower() == 'nwpu':
     dataset = crowd.Crowd_nwpu(os.path.join(data_path, 'val'), crop_size, 8, method='val')
-elif args.dataset == 'sh':
+elif args.dataset.lower() == 'sha' or args.dataset.lower() == 'shb':
     dataset = crowd.Crowd_sh(os.path.join(data_path, 'test_data'), crop_size, 8, method='val')
 else:
     raise NotImplementedError
