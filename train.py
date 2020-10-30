@@ -11,6 +11,7 @@ def str2bool(v):
 def parse_args():
     parser = argparse.ArgumentParser(description='Train')
     parser.add_argument('--data-dir', default='data/UCF-Train-Val-Test', help='data path')
+    parser.add_argument('--dataset', default='qnrf', help='dataset name: qnrf, nwpu, sha, shb')
     parser.add_argument('--lr', type=float, default=1e-5,
                         help='the initial learning rate')
     parser.add_argument('--weight-decay', type=float, default=1e-4,
@@ -40,6 +41,17 @@ def parse_args():
 
     args = parser.parse_args()
 
+    if args.dataset.lower() == 'qnrf':
+        args.crop_size = 512
+    elif args.dataset.lower() == 'nwpu':
+        args.crop_size = 384
+        args.val_epoch = 50
+    elif args.dataset.lower() == 'sha':
+        args.crop_size = 256
+    elif args.dataset.lower() == 'shb':
+        args.crop_size = 512
+    else:
+        raise NotImplementedError
     return args
 
 
