@@ -32,7 +32,7 @@ python preprocess_dataset.py --dataset <dataset name: qnrf or nwpu> --input-data
 3. Training
 
 ```
-python train.py --data-dir <path to processed qnrf dataset> --device <gpu device id>
+python train.py --dataset <dataset name: qnrf, sha, shb or nwpu> --data-dir <path to dataset> --device <gpu device id>
 ```
 
 4. Test
