@@ -19,7 +19,7 @@ For other libraries, check requirements.txt.
 
 + NWPU can be downloaded [here](https://www.crowdbenchmark.com/nwpucrowd.html)
 
-+ Shanghai Tech Part A and Part B can be downloaded [here](https://github.com/desenzhou/ShanghaiTechDataset)
++ Shanghai Tech Part A and Part B can be downloaded [here](https://www.kaggle.com/tthien/shanghaitech)
 
 2. Data preprocess
 

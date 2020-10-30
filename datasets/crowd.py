@@ -170,7 +170,7 @@ class Crowd_sh(Base):
     def __getitem__(self, item):
         img_path = self.im_list[item]
         name = os.path.basename(img_path).split('.')[0]
-        gd_path = os.path.join(self.root_path, 'ground_truth', 'GT_{}.mat'.format(name))
+        gd_path = os.path.join(self.root_path, 'ground-truth', 'GT_{}.mat'.format(name))
         img = Image.open(img_path).convert('RGB')
         keypoints = sio.loadmat(gd_path)['image_info'][0][0][0][0][0]
 
