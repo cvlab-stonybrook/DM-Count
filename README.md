@@ -38,7 +38,7 @@ python train.py --dataset <dataset name: qnrf, sha, shb or nwpu> --data-dir <pat
 4. Test
 
 ```
-python test.py --model-path <path of the model to be evaluated> --data-path <directory for the dataset> --dataset <dataset name: qnrf, nwpu or sh>
+python test.py --model-path <path of the model to be evaluated> --data-path <directory for the dataset> --dataset <dataset name: qnrf, sha, shb or nwpu>
 ```
 
 ## Pretrained models
