@@ -39,6 +39,7 @@ dataloader = torch.utils.data.DataLoader(dataset, 1, shuffle=False,
 model = vgg19()
 model.to(device)
 model.load_state_dict(torch.load(model_path, device))
+model.eval()
 image_errs = []
 for inputs, count, name in dataloader:
     inputs = inputs.to(device)
