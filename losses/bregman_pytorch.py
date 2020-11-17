@@ -143,8 +143,8 @@ def sinkhorn_knopp(a, b, C, reg=1e-1, maxIter=1000, stopThr=1e-9,
     assert na >= 1 and nb >= 1, 'C needs to be 2d'
     assert na == a.shape[0] and nb == b.shape[0], "Shape of a or b does't match that of C"
     assert reg > 0, 'reg should be greater than 0'
-    assert a.min() >= 0. and b.min() >= 0., 'Elements in a or b less than 0'
-
+    # assert a.min() >= 0. and b.min() >= 0., 'Elements in a or b less than 0'
+    # unnecessary check for our special case
     if log:
         log = {'err': []}
 

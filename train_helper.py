@@ -8,6 +8,7 @@ from torch.utils.data.dataloader import default_collate
 import numpy as np
 from datetime import datetime
 
+from utils.config import DATASET_PATHS
 from datasets.crowd import Crowd_qnrf, Crowd_nwpu, Crowd_sh
 from models import vgg19
 from losses.ot_loss import OT_Loss
@@ -30,10 +31,10 @@ class Trainer(object):
 
     def setup(self):
         args = self.args
-        sub_dir = 'input-{}_wot-{}_wtv-{}_reg-{}_nIter-{}_normCood-{}'.format(
-            args.crop_size, args.wot, args.wtv, args.reg, args.num_of_iter_in_ot, args.norm_cood)
+        sub_dir = '{}_input-{}_wot-{}_wtv-{}_reg-{}_nIter-{}_normCood-{}'.format(
+            args.dataset,args.crop_size, args.wot, args.wtv, args.reg, args.num_of_iter_in_ot, args.norm_cood)
 
-        self.save_dir = os.path.join('ckpts', sub_dir)
+        self.save_dir = os.path.join(args.out_path,'ckpts', sub_dir)
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
@@ -45,25 +46,31 @@ class Trainer(object):
             self.device = torch.device("cuda")
             self.device_count = torch.cuda.device_count()
             assert self.device_count == 1
-            self.logger.info('using {} gpus'.format(self.device_count))
+            self.logger.info('Using {} gpus'.format(self.device_count))
         else:
-            raise Exception("gpu is not available")
+            raise Exception("Gpu is not available")
 
-        downsample_ratio = 8
-        if args.dataset.lower() == 'qnrf':
-            self.datasets = {x: Crowd_qnrf(os.path.join(args.data_dir, x),
-                                           args.crop_size, downsample_ratio, x) for x in ['train', 'val']}
-        elif args.dataset.lower() == 'nwpu':
-            self.datasets = {x: Crowd_nwpu(os.path.join(args.data_dir, x),
-                                           args.crop_size, downsample_ratio, x) for x in ['train', 'val']}
-        elif args.dataset.lower() == 'sha' or args.dataset.lower() == 'shb':
-            self.datasets = {'train': Crowd_sh(os.path.join(args.data_dir, 'train_data'),
-                                               args.crop_size, downsample_ratio, 'train'),
-                             'val': Crowd_sh(os.path.join(args.data_dir, 'test_data'),
-                                             args.crop_size, downsample_ratio, 'val'),
-                             }
+        dataset_name = args.dataset.lower()
+        if dataset_name == 'qnrf':
+            from datasets.crowd import Crowd_qnrf as Crowd
+        elif dataset_name == 'nwpu':
+            from datasets.crowd import Crowd_nwpu as Crowd
+        elif dataset_name == 'sha':
+            from datasets.crowd import Crowd_sh as Crowd
+        elif dataset_name == 'shb':
+            from datasets.crowd import Crowd_sh as Crowd
         else:
             raise NotImplementedError
+        
+        downsample_ratio = 8
+        self.datasets = {
+            'train': Crowd(os.path.join(args.data_path,DATASET_PATHS[dataset_name]["train_path"]),
+                            crop_size=args.crop_size,
+                            downsample_ratio=downsample_ratio,method='train'),
+            'val': Crowd(os.path.join(args.data_path,DATASET_PATHS[dataset_name]["val_path"]),
+                            crop_size=args.crop_size,
+                            downsample_ratio=downsample_ratio,method='val')
+        }
 
         self.dataloaders = {x: DataLoader(self.datasets[x],
                                           collate_fn=(train_collate

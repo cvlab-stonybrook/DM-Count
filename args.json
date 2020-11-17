@@ -1,0 +1,30 @@
+{
+    "train":{
+        "load_args":"True",
+        "out_path":"./",
+        "dataset":"sha",
+        "lr":1e-5,
+        "weight_decay":1e-4,
+        "resume":"",
+        "auto_resume":"True",
+        "max_epoch":1000,
+        "val_epoch":5,
+        "val_start":50,
+        "batch_size":10,
+        "device":"0",
+        "num_workers":3,
+        "wot":0.1,
+        "wtv":0.01,
+        "reg":10.0,
+        "num_of_iter_in_ot":100,
+        "norm_cood":0
+    },
+    "test":{
+        "load_args":"True",
+        "device":"0",
+        "model_path":"/DM-Count/pretrained_models/model_nwpu.pth",
+        "data_path":"/ShanghaiTech/part_A",
+        "dataset":"sha",
+        "pred_density_map_path":""
+    }
+}

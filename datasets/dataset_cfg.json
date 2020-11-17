@@ -1,0 +1,45 @@
+
+{
+    "datasets":["qnrf","nwpu","sha","shb"],
+    "default_dataset_params":{
+        "qnrf":{
+            "crop_size":512,
+            "val_epoch":5
+        },
+        "nwpu":{
+            "crop_size":384,
+            "val_epoch":50
+        },
+        "sha":{
+            "crop_size":256,
+            "val_epoch":5
+        },
+        "shb":{
+            "crop_size":512,
+            "val_epoch":5      
+        }
+    },
+    "dataset_paths":{
+        "qnrf":{
+            "data_path":"data/UCF-Train-Val-Test",
+            "val_path":"val",
+            "train_path":"train"
+        },
+        "nwpu":{
+            "data_path":"data/UCF-Train-Val-Test",
+            "val_path":"val",
+            "train_path":"train"
+        },
+        "sha":{
+            "data_path":"/ShanghaiTech/part_A",
+            "val_path":"test_data",
+            "train_path":"train_data"
+        },
+        "shb":{
+            "data_path":"~/ShanghaiTech/part_B",
+            "val_path":"test_data",
+            "train_path":"train_data"
+        }
+    }
+}
+
