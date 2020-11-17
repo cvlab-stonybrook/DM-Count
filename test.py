@@ -4,41 +4,35 @@ import os
 import numpy as np
 import datasets.crowd as crowd
 from models import vgg19
-from config import
+import utils.arg_utils
+from utils.config import DATASET_LIST,DATASET_PARAMS,DATASET_PATHS,ARGS,DOWNSAMPLE_RATIO
 
-DOWNSAMPLE_RATIO = 8
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Test ')
-    load_args = parser.add_mutually_exclusive_group(required = True)
-    load_args.add_argument('--load-args',
+    parser.add_argument('--load-args',
                         help='file to read program args from.'+
-                        ' Cannot be run with other options.'
-                        ,required=False)
-    default = parser.add_argument_group()
-    default.add_argument('--device', default='0', help='assign device')
-    default.add_argument('--crop-size', type=int, required=False
-                        help='the crop size of the train image')
-    default.add_argument('--model-path', type=str, default='pretrained_models/model_qnrf.pth',
+                        ' Will ignore other parameters if specified',required=False)
+    parser.add_argument('--device', default='0', help='assign device')
+    parser.add_argument('--model-path', type=str, default='pretrained_models/model_qnrf.pth',
                         help='saved model path')
-    default.add_argument('--data-path', type=str,
-                        default='data/QNRF-Train-Val-Test',
-                        help='saved model path')
-    default.add_argument('--dataset', type=str, default='qnrf',
-                        help='dataset name: qnrf, nwpu, sha, shb')
-    default.add_argument('--pred-density-map-path', type=str, default='',
+    parser.add_argument('--data-path', type=str,
+                        default='data/QNRF-Train-Val-Test',help='dataset path')
+    parser.add_argument('--dataset', help='dataset name', choices=DATASET_LIST,
+                           default='qnrf')
+    parser.add_argument('--pred-density-map-path', type=str, default='',
                         help='save predicted density maps when pred-density-map-path is not empty.')
-
-    if args.load_args: # if load args is specified load from the file
-        args = argparse.Namespace(**ARGS['test'])
-
     args = parser.parse_args()
-    args = vars(args)
-    params_added = {}
-    for key,val in DATASET_PARAMS[args["dataset"]].items():
-        if not args[key]:
-            params_added[key] = val
-    args.update(params_added)
+    # load default dataset configurations from datasets/dataset_cfg.json
+    def_args_dict = {**DATASET_PARAMS[ARGS['test']['dataset']],
+                    **DATASET_PATHS[ARGS['test']['dataset']]}
+    # if json file is specified ignore all given options
+    if args.load_args:
+        def_args_dict.update(**ARGS['test'])
+    else: 
+        def_args_dict.update(**vars(args))
+    # overriding default arguments
+    args = argparse.Namespace(**def_args_dict)
 
     return args
 
@@ -52,7 +46,6 @@ if __name__ == '__main__':
     crop_size = args.crop_size
     data_path = args.data_path
 
-
     dataset_name = args.dataset.lower()
     if dataset_name == 'qnrf':
         from datasets.crowd import Crowd_qnrf as Crowd
@@ -65,7 +58,7 @@ if __name__ == '__main__':
     else:
         raise NotImplementedError
 
-    dataset = Crowd(os.path.join(args.data_path,DATASET_PATHS[dataset_name]["val_path"]),
+    dataset = Crowd(os.path.join(args.data_path, DATASET_PATHS[dataset_name]["val_path"]),
                         crop_size=args.crop_size,
                         downsample_ratio=DOWNSAMPLE_RATIO, method='val')
     dataloader = torch.utils.data.DataLoader(dataset, 1, shuffle=False,

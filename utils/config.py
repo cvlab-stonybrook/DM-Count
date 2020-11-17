@@ -12,4 +12,4 @@ with open(DATASET_CFG_PATH) as f:
     DATASET_PATHS = _cfg["dataset_paths"]
     DATASET_LIST = _cfg["datasets"]
 
-    
+DOWNSAMPLE_RATIO = 8

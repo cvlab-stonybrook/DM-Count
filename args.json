@@ -22,9 +22,8 @@
     "test":{
         "load_args":"True",
         "device":"0",
-        "crop_size":512,
-        "model_path":"pretrained_models/model_qnrf.pth",
-        "data_path":"~/ShanghaiTech/part_A",
+        "model_path":"/DM-Count/pretrained_models/model_nwpu.pth",
+        "data_path":"/ShanghaiTech/part_A",
         "dataset":"sha",
         "pred_density_map_path":""
     }

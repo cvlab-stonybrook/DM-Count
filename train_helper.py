@@ -8,7 +8,7 @@ from torch.utils.data.dataloader import default_collate
 import numpy as np
 from datetime import datetime
 
-from config import DATASET_PATHS
+from utils.config import DATASET_PATHS
 from datasets.crowd import Crowd_qnrf, Crowd_nwpu, Crowd_sh
 from models import vgg19
 from losses.ot_loss import OT_Loss
