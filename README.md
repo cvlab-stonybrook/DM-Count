@@ -85,7 +85,7 @@ When this option is specified other given option from the terminal will be ignor
 To directly run it with default arguments 
 make sure you select these correctly;
 from args.json file;
-```json
+```
 ..
 "train":{
   ...
@@ -95,7 +95,7 @@ from args.json file;
 ..
 ```
 and from datasets/dataset_cfg.json;
-```json
+```
 {
   ..
     ...
