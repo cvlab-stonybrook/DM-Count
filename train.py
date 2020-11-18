@@ -2,7 +2,7 @@ import argparse
 import os
 import torch
 from train_helper import Trainer
-from utils.config import DATASET_LIST,DATASET_PARAMS,ARGS,DATASET_PATHS,DOWNSAMPLE_RATIO
+from utils.config import DATASET_LIST,DATASET_PARAMS,DATASET_PATHS,DOWNSAMPLE_RATIO
 import utils.arg_utils
 
 def parse_args():
@@ -44,13 +44,17 @@ def parse_args():
     
     args = parser.parse_args()
 
-    # load default dataset configurations from datasets/dataset_cfg.json
-    def_args_dict = {**DATASET_PARAMS[ARGS['train']['dataset']],
-                    **DATASET_PATHS[ARGS['train']['dataset']]}
     # if json file is specified ignore all given options
     if args.load_args:
-        def_args_dict.update(**ARGS['train'])
-    else: 
+        args = utils.config.load_args(args.load_args)
+        # load default dataset configurations from datasets/dataset_cfg.json
+        def_args_dict = {**DATASET_PARAMS[args['train']['dataset']],
+                        **DATASET_PATHS[args['train']['dataset']]}
+        def_args_dict.update(**args['train'])
+    else:
+        # load default dataset configurations from datasets/dataset_cfg.json
+        def_args_dict = {**DATASET_PARAMS[args.dataset],
+                        **DATASET_PATHS[args.dataset]}
         def_args_dict.update(**vars(args))
     # overriding default arguments
     args = argparse.Namespace(**def_args_dict)

@@ -22,14 +22,17 @@ def parse_args():
                            default='qnrf')
     parser.add_argument('--pred-density-map-path', type=str, default='',
                         help='save predicted density maps when pred-density-map-path is not empty.')
-    args = parser.parse_args()
-    # load default dataset configurations from datasets/dataset_cfg.json
-    def_args_dict = {**DATASET_PARAMS[ARGS['test']['dataset']],
-                    **DATASET_PATHS[ARGS['test']['dataset']]}
     # if json file is specified ignore all given options
     if args.load_args:
-        def_args_dict.update(**ARGS['test'])
-    else: 
+        args = utils.config.load_args(args.load_args)
+        # load default dataset configurations from datasets/dataset_cfg.json
+        def_args_dict = {**DATASET_PARAMS[args['test']['dataset']],
+                        **DATASET_PATHS[args['test']['dataset']]}
+        def_args_dict.update(**args['test'])
+    else:
+        # load default dataset configurations from datasets/dataset_cfg.json
+        def_args_dict = {**DATASET_PARAMS[args.dataset],
+                        **DATASET_PATHS[args.dataset]}
         def_args_dict.update(**vars(args))
     # overriding default arguments
     args = argparse.Namespace(**def_args_dict)
