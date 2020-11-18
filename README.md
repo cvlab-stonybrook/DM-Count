@@ -29,7 +29,8 @@ Due to large sizes of images in QNRF and NWPU datasets, we preprocess these two 
 python preprocess_dataset.py --dataset <dataset name: qnrf or nwpu> --input-dataset-path <original data directory> --output-dataset-path <processed data directory> 
 ```
     
-3. Training
+3. Training  
+[Here](https://www.kaggle.com/selmanzleyen/dmcount-shb) is a kaggle notebook for a quickstart.
 The interface is like this;
 ```
 usage: train.py [-h] [--load-args LOAD_ARGS] [--data-path DATA_PATH] [--dataset {qnrf,nwpu,sha,shb}]
