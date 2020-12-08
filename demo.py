@@ -1,24 +1,15 @@
-import argparse
 import torch
-import os
-import numpy as np
-import datasets.crowd as crowd
 from models import vgg19
 import gdown
 from PIL import Image
 from torchvision import transforms
 import gradio as gr
 
-crop_size = 512
 model_path = "pretrained_models/model_qnrf.pth"
-data_path = "images/"
+url = "https://drive.google.com/uc?id=1nnIHPaV9RGqK8JHL645zmRvkNrahD9ru"
+gdown.download(url, model_path, quiet=False)
 
-if not os.path.exists(model_path):
-    os.mkdir("pretrained_models")
-    url = "https://drive.google.com/uc?id=1nnIHPaV9RGqK8JHL645zmRvkNrahD9ru"
-    gdown.download(url, model_path, quiet=False)
-
-device = torch.device('cpu')
+device = torch.device('cpu')  # device can be "cpu" or "gpu"
 
 model = vgg19()
 model.to(device)
@@ -40,12 +31,13 @@ title = "Distribution Matching for Crowd Counting"
 desc = "A demo of DM-Count, a NeurIPS 2020 paper by Wang et al. Outperforms the state-of-the-art methods by a " \
        "large margin on four challenging crowd counting datasets: UCF-QNRF, NWPU, ShanghaiTech, and UCF-CC50. " \
        "This demo uses the QNRF trained model. Try it by uploading an image or clicking on an example " \
-       "(could take up to 10s since its running on CPU)."
+       "(could take up to 20s if running on CPU)."
 examples = [
-    ["images/3.png"],
-    ["images/2.png"],
-    ["images/1.png"],
+    ["example_images/3.png"],
+    ["example_images/2.png"],
+    ["example_images/1.png"],
 ]
 inputs = gr.inputs.Image(label="Image of Crowd")
 outputs = gr.outputs.Label(label="Predicted Count")
-gr.Interface(fn=predict, inputs=inputs, outputs=outputs, title=title, description=desc, examples=examples, allow_flagging=False).launch()
+gr.Interface(fn=predict, inputs=inputs, outputs=outputs, title=title, description=desc, examples=examples,
+             allow_flagging=False).launch()
