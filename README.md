@@ -58,7 +58,6 @@ To launch a Gradio interface, run
 
 ```
  python demo.py
-
 ```
 
 + Kaggle Notebook
