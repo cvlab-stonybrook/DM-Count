@@ -52,7 +52,7 @@ Pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in p
 A web interface to can be found [here](https://gradio.app/g/dm-count). 
 ![demo](https://i.ibb.co/MNrFJ3s/dm-count-gif.gif)
 
-Feel free to upload a image and try out the demo on a web browser. It is developed by Ali Abdalla from [Gradio](https://github.com/gradio-app/gradio). Gradio is an open source library, which helps to create interfaces to make models more accessible. Thanks Ali and Gradio! 
+Feel free to upload a image and try out the demo on a web browser. It is developed by [Ali Abdalla]() from [Gradio](https://github.com/gradio-app/gradio). Gradio is an open source library, which helps to create interfaces to make models more accessible. Thanks Ali and Gradio! 
 
 To launch a Gradio interface, run 
 
@@ -60,6 +60,10 @@ To launch a Gradio interface, run
  python demo.py
 
 ```
+
++ Kaggle Notebook
+
+A [Kaggle Notebook](https://www.kaggle.com/selmanzleyen/dmcount-shb) is developed by [Selman Ozleyen](https://github.com/SelmanOzleyen/DM-Count). Thanks Selman!
 
 
 
