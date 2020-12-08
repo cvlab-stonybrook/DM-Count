@@ -32,6 +32,7 @@ def predict(inp):
     vis_img = (vis_img - vis_img.min()) / (vis_img.max() - vis_img.min() + 1e-5)
     vis_img = (vis_img * 255).astype(np.uint8)
     vis_img = cv2.applyColorMap(vis_img, cv2.COLORMAP_JET)
+    vis_img = cv2.cvtColor(vis_img, cv2.COLOR_BGR2RGB)
     return vis_img, int(count)
 
 
