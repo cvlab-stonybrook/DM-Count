@@ -6,6 +6,7 @@ Official Pytorch implementation of the paper Distribution Matching for Crowd Cou
 
 We propose to use Distribution Matching for crowd COUNTing (DM-Count). In DM-Count, we use Optimal Transport (OT) to measure the similarity between the normalized predicted density map and the normalized ground truth density map. To stabilize OT computation, we include a Total Variation loss in our model. We show that the generalization error bound of DM-Count is tighter than that of the Gaussian smoothed methods. Empirically, our method outperforms the state-of-the-art methods by a large margin on four challenging crowd counting datasets: UCF-QNRF, NWPU, ShanghaiTech, and UCF-CC50.
 
+
 ## Prerequisites
 
 Python 3.x
@@ -47,14 +48,16 @@ python test.py --model-path <path of the model to be evaluated> --data-path <dir
 
 Pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in pretrained_models folder or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
 
+
 ## Other resources
 
 + Web Demo
 
 A web interface to can be found [here](https://gradio.app/g/dm-count). 
-![demo](https://i.ibb.co/MNrFJ3s/dm-count-gif.gif)
 
-Feel free to upload a image and try out the demo on a web browser. It is developed by [Ali Abdalla]() from [Gradio](https://github.com/gradio-app/gradio). Gradio is an open source library, which helps to create interfaces to make models more accessible. Thanks Ali and Gradio! 
+![demo](https://i.ibb.co/m65HpCJ/dm-count.gif)
+
+Feel free to upload a image and try out the demo on a web browser. It is developed by [Ali Abdalla](twitter.com/si3luwa) from [Gradio](https://github.com/gradio-app/gradio). Gradio is an open source library, which helps to create interfaces to make models more accessible. Thanks Ali and Gradio! 
 
 To launch a Gradio interface, run 
 
@@ -65,7 +68,6 @@ To launch a Gradio interface, run
 + Kaggle Notebook
 
 A [Kaggle Notebook](https://www.kaggle.com/selmanzleyen/dmcount-shb) is developed by [Selman Ozleyen](https://github.com/SelmanOzleyen/DM-Count). Thanks Selman!
-
 
 
 ## References
