@@ -14,6 +14,7 @@ model_path = "pretrained_models/model_qnrf.pth"
 data_path = "images/"
 
 if not os.path.exists(model_path):
+    os.mkdir("pretrained_models")
     url = "https://drive.google.com/uc?id=1nnIHPaV9RGqK8JHL645zmRvkNrahD9ru"
     gdown.download(url, model_path, quiet=False)
 
