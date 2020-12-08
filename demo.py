@@ -17,7 +17,6 @@ if not os.path.exists(model_path):
     url = "https://drive.google.com/uc?id=1nnIHPaV9RGqK8JHL645zmRvkNrahD9ru"
     gdown.download(url, model_path, quiet=False)
 
-
 device = torch.device('cpu')
 
 model = vgg19()
