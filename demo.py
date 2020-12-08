@@ -40,11 +40,11 @@ title = "Distribution Matching for Crowd Counting"
 desc = "A demo of DM-Count, a NeurIPS 2020 paper by Wang et al. Outperforms the state-of-the-art methods by a " \
        "large margin on four challenging crowd counting datasets: UCF-QNRF, NWPU, ShanghaiTech, and UCF-CC50. " \
        "This demo uses the QNRF trained model. Try it by uploading an image or clicking on an example " \
-       "(could take up to 30s since its running on CPU)."
+       "(could take up to 10s since its running on CPU)."
 examples = [
-    "images/1.png",
-    "images/2.png",
-    "images/3.png",
+    ["images/3.png"],
+    ["images/2.png"],
+    ["images/1.png"],
 ]
 inputs = gr.inputs.Image(label="Image of Crowd")
 outputs = gr.outputs.Label(label="Predicted Count")
