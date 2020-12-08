@@ -52,11 +52,26 @@ python test.py --model-path <path of the model to be evaluated> --data-path <dir
 
 Pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found in pretrained_models folder or [Google Drive](https://drive.google.com/drive/folders/10U7F4iW_aPICM5-qJq21SXLLkzlum9tX?usp=sharing)
 
-To launch a [Gradio](https://github.com/gradio-app/gradio) interface, run 
+
+## Other resources
+
++ Web Demo
+
+A web interface to can be found [here](https://gradio.app/g/dm-count). 
+![demo](https://i.ibb.co/6ZTM9rs/with-density.gif)
+
+Feel free to upload a image and try out the demo on a web browser. It is developed by [Ali Abdalla](twitter.com/si3luwa) from [Gradio](https://github.com/gradio-app/gradio). Gradio is an open source library, which helps to create interfaces to make models more accessible. Thanks Ali and Gradio! 
+
+To launch a Gradio interface, run 
 
 ```
-python demo.py
-``` 
+ python demo.py
+```
+
++ Kaggle Notebook
+
+A [Kaggle Notebook](https://www.kaggle.com/selmanzleyen/dmcount-shb) is developed by [Selman Ozleyen](https://github.com/SelmanOzleyen/DM-Count). Thanks Selman!
+
 
 ## References
 If you find this work or code useful, please cite:
