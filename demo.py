@@ -4,6 +4,9 @@ import gdown
 from PIL import Image
 from torchvision import transforms
 import gradio as gr
+import cv2
+import numpy as np
+import scipy
 
 model_path = "pretrained_models/model_qnrf.pth"
 url = "https://drive.google.com/uc?id=1nnIHPaV9RGqK8JHL645zmRvkNrahD9ru"
@@ -24,7 +27,12 @@ def predict(inp):
     with torch.set_grad_enabled(False):
         outputs, _ = model(inp)
     count = torch.sum(outputs).item()
-    return int(count)
+    vis_img = outputs[0, 0].cpu().numpy()
+    # normalize density map values from 0 to 1, then map it to 0-255.
+    vis_img = (vis_img - vis_img.min()) / (vis_img.max() - vis_img.min() + 1e-5)
+    vis_img = (vis_img * 255).astype(np.uint8)
+    vis_img = cv2.applyColorMap(vis_img, cv2.COLORMAP_JET)
+    return vis_img, int(count)
 
 
 title = "Distribution Matching for Crowd Counting"
@@ -38,6 +46,6 @@ examples = [
     ["example_images/1.png"],
 ]
 inputs = gr.inputs.Image(label="Image of Crowd")
-outputs = gr.outputs.Label(label="Predicted Count")
+outputs = [gr.outputs.Image(label="Predicted Density Map"), gr.outputs.Label(label="Predicted Count")]
 gr.Interface(fn=predict, inputs=inputs, outputs=outputs, title=title, description=desc, examples=examples,
              allow_flagging=False).launch()
