@@ -21,7 +21,6 @@ class OT_Loss(Module):
         if self.norm_cood:
             self.cood = self.cood / c_size * 2 - 1 # map to [-1, 1]
         self.output_size = self.cood.size(1)
-        self.softmax = torch.nn.Softmax(dim=0)
 
 
     def forward(self, normed_density, unnormed_density, points):
