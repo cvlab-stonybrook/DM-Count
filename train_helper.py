@@ -19,9 +19,8 @@ def train_collate(batch):
     transposed_batch = list(zip(*batch))
     images = torch.stack(transposed_batch[0], 0)
     points = transposed_batch[1]  # the number of points is not fixed, keep it as a list of tensor
-    st_sizes = torch.FloatTensor(transposed_batch[2])
-    gt_discretes = torch.stack(transposed_batch[3], 0)
-    return images, points, st_sizes, gt_discretes
+    gt_discretes = torch.stack(transposed_batch[2], 0)
+    return images, points, gt_discretes
 
 
 class Trainer(object):
@@ -124,7 +123,7 @@ class Trainer(object):
         epoch_start = time.time()
         self.model.train()  # Set model to training mode
 
-        for step, (inputs, points, st_sizes, gt_discrete) in enumerate(self.dataloaders['train']):
+        for step, (inputs, points, gt_discrete) in enumerate(self.dataloaders['train']):
             inputs = inputs.to(self.device)
             gd_count = np.array([len(p) for p in points], dtype=np.float32)
             points = [p.to(self.device) for p in points]
