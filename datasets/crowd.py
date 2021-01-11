@@ -87,7 +87,7 @@ class Base(data.Dataset):
                 gt_discrete = np.fliplr(gt_discrete)
         gt_discrete = np.expand_dims(gt_discrete, 0)
 
-        return self.trans(img), torch.from_numpy(keypoints.copy()).float(), st_size, torch.from_numpy(
+        return self.trans(img), torch.from_numpy(keypoints.copy()).float(), torch.from_numpy(
             gt_discrete.copy()).float()
 
 
@@ -220,5 +220,5 @@ class Crowd_sh(Base):
                 gt_discrete = np.fliplr(gt_discrete)
         gt_discrete = np.expand_dims(gt_discrete, 0)
 
-        return self.trans(img), torch.from_numpy(keypoints.copy()).float(), st_size, torch.from_numpy(
+        return self.trans(img), torch.from_numpy(keypoints.copy()).float(), torch.from_numpy(
             gt_discrete.copy()).float()

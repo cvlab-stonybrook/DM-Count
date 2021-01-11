@@ -21,7 +21,6 @@ class OT_Loss(Module):
         if self.norm_cood:
             self.cood = self.cood / c_size * 2 - 1 # map to [-1, 1]
         self.output_size = self.cood.size(1)
-        self.softmax = torch.nn.Softmax(dim=0)
 
 
     def forward(self, normed_density, unnormed_density, points):
@@ -36,7 +35,7 @@ class OT_Loss(Module):
                 # compute l2 square distance, it should be source target distance. [#gt, #cood * #cood]
                 if self.norm_cood:
                     im_points = im_points / self.c_size * 2 - 1 # map to [-1, 1]
-                x = im_points[:, 0].unsqueeze_(1)  # [N, 1]
+                x = im_points[:, 0].unsqueeze_(1)  # [#gt, 1]
                 y = im_points[:, 1].unsqueeze_(1)
                 x_dis = -2 * torch.matmul(x, self.cood) + x * x + self.cood * self.cood # [#gt, #cood]
                 y_dis = -2 * torch.matmul(y, self.cood) + y * y + self.cood * self.cood
