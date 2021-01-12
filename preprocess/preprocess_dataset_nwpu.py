@@ -113,6 +113,7 @@ def main(input_dataset_path, output_dataset_path, min_size=384, max_size=1920):
                 name = os.path.basename(im_path)
                 im_save_path = os.path.join(sub_save_dir, name)
                 print(name)
+                # The Gaussian smoothed density map is just for visualization. It's not used in training.
                 im, points, density_map = generate_data(im_path, mat_path, min_size, max_size)
                 im.save(im_save_path)
                 gd_save_path = im_save_path.replace('jpg', 'npy')
