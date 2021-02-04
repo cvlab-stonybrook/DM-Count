@@ -223,7 +223,7 @@ class Crowd_sh(Base):
             if random.random() > 0.5:
                 img = F.hflip(img)
                 gt_discrete = np.fliplr(gt_discrete)
-                keypoints[:, 0] = w - keypoints[:, 0]
+                keypoints[:, 0] = w - keypoints[:, 0] - 1
         else:
             if random.random() > 0.5:
                 img = F.hflip(img)
