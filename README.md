@@ -2,7 +2,7 @@
 
 Official Pytorch implementation of the paper Distribution Matching for Crowd Counting (NeurIPS, spotlight).
 
-[Arxiv](https://arxiv.org/pdf/2009.13077.pdf) | [NeurIPS Processings](https://proceedings.neurips.cc/paper/2020/hash/118bd558033a1016fcc82560c65cca5f-Abstract.html)
+[Arxiv](https://arxiv.org/pdf/2009.13077.pdf) | [NeurIPS Processings](https://proceedings.neurips.cc/paper/2020/hash/118bd558033a1016fcc82560c65cca5f-Abstract.html) | :rocket: [Web Demo and Docker image on Replicate](https://replicate.com/cvlab-stonybrook/crowd-counting)
 
 We propose to use Distribution Matching for crowd COUNTing (DM-Count). In DM-Count, we use Optimal Transport (OT) to measure the similarity between the normalized predicted density map and the normalized ground truth density map. To stabilize OT computation, we include a Total Variation loss in our model. We show that the generalization error bound of DM-Count is tighter than that of the Gaussian smoothed methods. Empirically, our method outperforms the state-of-the-art methods by a large margin on four challenging crowd counting datasets: UCF-QNRF, NWPU, ShanghaiTech, and UCF-CC50.
 
@@ -52,6 +52,16 @@ Pretrained models on UCF-QNRF, NWPU, Shanghaitech part A and B can be found [Goo
 ## Other resources
 
 + Web Demo
+
+**6.26.2022** 
+
+### Replicate 
+
+:rocket: A Web Demo and Docker image can be found on Replicate [here](https://replicate.com/google-research/3d-moments). You can upload an image and choose between the 4 different models to run inference on. 
+
+---
+
+### Gradio
 
 A web interface to can be found [here](https://gradio.app/g/dm-count). 
 
